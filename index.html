@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NNN Reboot Card Database</title>
+
+  <!-- Main Styles -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Leaflet CSS -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -12,18 +16,22 @@
     crossorigin=""
   />
 </head>
+
 <body>
   <div class="container">
+    <!-- Header -->
     <header>
       <h1>NNN Reboot Card Database</h1>
       <p class="tagline">Global Storage & Server Network Visualization</p>
     </header>
 
+    <!-- Map Section -->
     <main>
       <section class="map-section">
         <div id="map"></div>
       </section>
 
+      <!-- Info Section -->
       <section class="info">
         <h2>About the Database</h2>
         <p>
@@ -38,6 +46,7 @@
         </div>
       </section>
 
+      <!-- Registration Section -->
       <section class="register">
         <h2>Register as a Database Manager</h2>
         <p>
@@ -56,16 +65,88 @@
       </section>
     </main>
 
+    <!-- Footer -->
     <footer>
       <p>© 2025 NNN Reboot Systems. All rights reserved.</p>
     </footer>
   </div>
 
+  <!-- Leaflet JS -->
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-VueE+5pgPOO0B5XbKz9ycQkPgT6dr8w24MEC0W0H+0c="
     crossorigin=""
   ></script>
-  <script src="script.js"></script>
+
+  <!-- Custom JS -->
+  <script>
+    // Initialize Map
+    const map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
+
+    // Dark world map layer
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '',
+      maxZoom: 5
+    }).addTo(map);
+
+    // Marker data
+    const nodes = [
+      { type: 'storage', name: 'Singapore', coords: [1.3521, 103.8198] },
+      { type: 'server', name: 'China', coords: [35.8617, 104.1954] },
+      { type: 'storage', name: 'Indonesia', coords: [-6.2, 106.8167] },
+      { type: 'server', name: 'Japan', coords: [35.6762, 139.6503] },
+      { type: 'server', name: 'Germany', coords: [51.1657, 10.4515] },
+      { type: 'storage', name: 'UK', coords: [55.3781, -3.436] },
+      { type: 'server', name: 'Poland', coords: [51.9194, 19.1451] },
+      { type: 'server', name: 'USA (East)', coords: [37.0902, -95.7129] },
+      { type: 'storage', name: 'USA (West)', coords: [36.7783, -119.4179] },
+      { type: 'server', name: 'Mexico', coords: [23.6345, -102.5528] },
+      { type: 'server', name: 'Brazil', coords: [-14.235, -51.9253] },
+      { type: 'storage', name: 'Chile', coords: [-35.6751, -71.543] },
+      { type: 'server', name: 'Australia', coords: [-25.2744, 133.7751] },
+      { type: 'storage', name: 'New Zealand', coords: [-40.9006, 174.886] }
+    ];
+
+    // Create markers
+    nodes.forEach(node => {
+      const color = node.type === 'server' ? '#00bfff' : '#00ff85';
+      const markerIcon = L.divIcon({
+        className: 'custom-marker',
+        html: `<div style="background:${color};
+          width:12px;height:12px;border-radius:50%;
+          box-shadow:0 0 12px ${color},0 0 25px ${color}55;"></div>`
+      });
+
+      const marker = L.marker(node.coords, { icon: markerIcon }).addTo(map);
+      marker.bindPopup(`<b>${node.name}</b><br>Calculating latency...`);
+
+      // On click, calculate latency
+      marker.on('click', async () => {
+        if (!navigator.geolocation) {
+          marker.setPopupContent(`<b>${node.name}</b><br>Latency: N/A`);
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(pos => {
+          const user = [pos.coords.latitude, pos.coords.longitude];
+          const distance = haversine(user, node.coords);
+          const latency = Math.round(distance / 200);
+          marker.setPopupContent(`<b>${node.name}</b><br>Approx. Latency: ${latency} ms`);
+        });
+      });
+    });
+
+    // Haversine distance formula (km)
+    function haversine(coord1, coord2) {
+      const R = 6371;
+      const dLat = (coord2[0] - coord1[0]) * Math.PI / 180;
+      const dLon = (coord2[1] - coord1[1]) * Math.PI / 180;
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(coord1[0] * Math.PI / 180) *
+        Math.cos(coord2[0] * Math.PI / 180) *
+        Math.sin(dLon / 2) ** 2;
+      return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+  </script>
 </body>
 </html>
