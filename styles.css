@@ -1,114 +1,211 @@
-/* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #0b132b;
-  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #0a0a0a, #000);
+  color: #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  padding: 2rem 3rem;
+  box-shadow: 0 0 40px rgba(0, 200, 255, 0.15);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  color: #00e0ff;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  color: #aaa;
+  margin-top: 0.5rem;
+}
+
+.map-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.map {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 16 / 9;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/1/17/BlueMarble-2001-2002.jpg') center/cover no-repeat;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+/* Base Marker Styles */
+.marker {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Blue = Server */
+.marker.server {
+  background: #00bfff;
+  box-shadow: 0 0 12px #00bfff, 0 0 30px #00bfff55;
+}
+
+/* Green = Storage */
+.marker.storage {
+  background: #00ff85;
+  box-shadow: 0 0 12px #00ff85, 0 0 30px #00ff8555;
+}
+
+/* Hover effect */
+.marker:hover {
+  animation: pulseFast 0.8s infinite;
+  filter: brightness(1.6);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulseFast {
+  0%, 100% { transform: translate(-50%, -50%) scale(1.2); }
+  50% { transform: translate(-50%, -50%) scale(1.7); }
+}
+
+.info {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.info h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #00e0ff;
+  margin-bottom: 1rem;
+}
+
+.info p {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  color: #ccc;
   line-height: 1.6;
 }
 
-/* HEADER */
-header {
-  background-color: #1c2541;
-  color: white;
-  padding: 20px 0;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-header nav ul { list-style: none; display: flex; }
-header nav ul li { margin: 0 15px; }
-header nav ul li a {
-  color: #dbe4ee;
-  text-decoration: none;
-  font-size: 18px;
-}
-header nav ul li a:hover { color: #00aaff; }
-
-/* HERO */
-.hero {
-  background: linear-gradient(to bottom right, #1c2541, #3a506b);
-  color: white;
-  text-align: center;
-  padding: 120px 20px;
-}
-
-.cta-button {
-  background-color: #00aaff;
-  padding: 15px 30px;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  transition: background-color .3s ease;
-}
-.cta-button:hover { background-color: #0077cc; }
-
-/* FEATURES */
-.features {
-  background-color: #1c2541;
-  text-align: center;
-  padding: 60px 20px;
-}
-.feature-item {
-  background-color: #3a506b;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 15px;
-  transition: transform .3s;
-}
-.feature-item:hover { transform: translateY(-5px); }
-
-/* PRICING */
-.pricing {
-  background-color: #0b132b;
-  text-align: center;
-  padding: 80px 20px;
-}
-.pricing-card {
-  background-color: #1c2541;
-  border-radius: 10px;
-  padding: 25px;
-  width: 300px;
-  margin: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-  display: inline-block;
-}
-.pricing-card ul { list-style: none; padding-left: 0; margin: 20px 0; }
-.pricing-card li { margin-bottom: 10px; }
-.pricing-card .btn {
-  background-color: #00aaff;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-.pricing-card .btn:hover { background-color: #0077cc; }
-
-/* PREMIUM */
-.premium {
-  position: relative;
-  background-color: #004aad;
-  color: white;
-  overflow: hidden;
-}
-.premium::before {
-  content: "";
-  position: absolute;
-  top: -2px; left: -2px; right: -2px; bottom: -2px;
-  background: linear-gradient(270deg, red, orange, yellow, green, cyan, blue, violet, red);
-  background-size: 800% 800%;
-  z-index: 0;
+.card {
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.3);
   border-radius: 12px;
-  animation: rainbow 6s linear infinite;
-}
-.premium * { position: relative; z-index: 1; }
-@keyframes rainbow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  padding: 1.5rem 2rem;
+  min-width: 150px;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
-/* JOKES, CONTACT, FOOTER */
-.jokes { background-color: #3a506b; padding: 60px 20px; text-align: center; }
-.contact { background-color: #1c2541; padding: 60px 20px; text-align: center; }
-footer { background-color: #0b132b; text-align: center; padding: 20px 0; color: #999; }
+.card:hover {
+  transform: translateY(-6px);
+  background: rgba(0, 255, 255, 0.15);
+}
+
+.card h3 {
+  color: #00ffff;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* Registration Sections */
+.register {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: rgba(0, 255, 255, 0.03);
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+}
+
+.register h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #00e0ff;
+  margin-bottom: 1rem;
+}
+
+.register p {
+  color: #ccc;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.register a {
+  color: #00ffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+
+/* Reseller distinct look */
+.register.reseller {
+  margin-top: 2rem;
+  border-color: rgba(0, 255, 100, 0.25);
+  box-shadow: 0 0 25px rgba(0, 255, 100, 0.08);
+}
+
+.register.reseller h2 {
+  color: #00ff9d;
+}
+
+footer {
+  text-align: center;
+  color: #555;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+}
