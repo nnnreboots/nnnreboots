@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NNN Reboot Card Database</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+e2Ck9zGQWkHkF4lCZuC2xJ7DP5+9X+MMbYHLvQ2Y="
+    crossorigin=""
+  />
 </head>
 <body>
   <div class="container">
@@ -15,31 +21,7 @@
 
     <main>
       <section class="map-section">
-        <div class="map">
-          <!-- Asia -->
-          <div class="marker storage" style="top: 54%; left: 82%;" title="Singapore - Storage"></div>
-          <div class="marker server" style="top: 48%; left: 78%;" title="China - Main Server"></div>
-          <div class="marker storage" style="top: 60%; left: 85%;" title="Indonesia - Backup Storage"></div>
-          <div class="marker server" style="top: 42%; left: 74%;" title="Japan - Data Relay"></div>
-
-          <!-- Europe -->
-          <div class="marker server" style="top: 38%; left: 52%;" title="Germany - Core Node"></div>
-          <div class="marker storage" style="top: 40%; left: 48%;" title="UK - Storage Cluster"></div>
-          <div class="marker server" style="top: 42%; left: 56%;" title="Poland - Regional Node"></div>
-
-          <!-- North America -->
-          <div class="marker server" style="top: 40%; left: 26%;" title="USA - East Server"></div>
-          <div class="marker storage" style="top: 38%; left: 22%;" title="USA - West Storage"></div>
-          <div class="marker server" style="top: 46%; left: 30%;" title="Mexico - Relay Node"></div>
-
-          <!-- South America -->
-          <div class="marker server" style="top: 66%; left: 34%;" title="Brazil - South Node"></div>
-          <div class="marker storage" style="top: 74%; left: 28%;" title="Chile - Storage"></div>
-
-          <!-- Oceania -->
-          <div class="marker server" style="top: 76%; left: 92%;" title="Australia - Data Center"></div>
-          <div class="marker storage" style="top: 68%; left: 96%;" title="New Zealand - Edge Storage"></div>
-        </div>
+        <div id="map"></div>
       </section>
 
       <section class="info">
@@ -78,5 +60,12 @@
       <p>© 2025 NNN Reboot Systems. All rights reserved.</p>
     </footer>
   </div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-VueE+5pgPOO0B5XbKz9ycQkPgT6dr8w24MEC0W0H+0c="
+    crossorigin=""
+  ></script>
+  <script src="script.js"></script>
 </body>
 </html>
