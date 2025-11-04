@@ -5,125 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NNN Reboot Card Database</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>NNN Reboot Card Database</h1>
+    <h1>NNN REBOOT CARD DATABASE</h1>
     <p>Global Storage & Server Network Visualization</p>
   </header>
 
-  <main>
-    <section class="map-section">
-      <div id="map"></div>
-      <div id="ping-card" class="ping-card hidden"></div>
-    </section>
+  <section id="map-section">
+    <div id="map"></div>
+  </section>
 
-    <section class="about">
-      <h2>About the Database</h2>
-      <p>The NNN Reboot Card Database is globally distributed for optimized performance and minimal latency. Each storage and server node ensures reliability and redundancy across continents.</p>
-      <div class="stats">
-        <div class="card"><h3>Global Nodes</h3><p>14</p></div>
-        <div class="card"><h3>Continents Covered</h3><p>6</p></div>
-        <div class="card"><h3>Average Latency</h3><p>38 ms</p></div>
-      </div>
-    </section>
+  <section class="card large">
+    <h2>About the Database</h2>
+    <p>
+      The NNN Reboot Card Database is globally distributed for optimized performance and minimal latency. 
+      Each storage and server node ensures reliability and redundancy across continents.
+    </p>
 
-    <section class="register full-card">
-      <h2>Register as a Database Manager</h2>
-      <p>Want to join our global data network? Contact us at <a href="mailto:nnnreboots@gmail.com">nnnreboots@gmail.com</a></p>
-    </section>
+    <div class="stats">
+      <div class="stat"><h3>Global Nodes</h3><p>14</p></div>
+      <div class="stat"><h3>Continents Covered</h3><p>6</p></div>
+      <div class="stat"><h3>Average Latency</h3><p>38 ms</p></div>
+    </div>
+  </section>
 
-    <section class="register full-card green">
-      <h2>Register as an Authorized NNN Reboot Card Reseller</h2>
-      <p>Become an official NNN Reboot Card reseller. <br><a href="mailto:nnnreboots@gmail.com">Apply Now</a></p>
-    </section>
-  </main>
+  <section class="card large">
+    <h2>Register as a Database Manager</h2>
+    <p>Want to join our global data network?<br>Contact us at <span class="highlight">nnnreboots@gmail.com</span>.</p>
+  </section>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <section class="card large">
+    <h2>Register as an Authorized Reseller</h2>
+    <p>Become an official NNN Reboot Card reseller.<br><a href="#" class="highlight">Apply Now</a></p>
+  </section>
+
   <script>
-    const map = L.map('map', {
+    const map = L.map("map", {
       zoomControl: false,
+      attributionControl: false,
+      minZoom: 1.5,
+      maxZoom: 1.5,
       dragging: false,
       scrollWheelZoom: false,
       doubleClickZoom: false,
       boxZoom: false,
-      keyboard: false,
-      touchZoom: false,
-      worldCopyJump: false,
-      maxBoundsViscosity: 1.0
-    }).setView([20, 0], 2);
+      keyboard: false
+    }).setView([20, 0], 1.5);
 
-    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      noWrap: true,
-      bounds: [[-90, -180], [90, 180]],
-      maxZoom: 3,
-      minZoom: 2
-    });
-    tiles.addTo(map);
+    L.tileLayer('https://{s}.tile-cyberpunk-style.com/{z}/{x}/{y}.png', {
+      attribution: '',
+    }).addTo(map);
 
-    const pingCard = document.getElementById('ping-card');
-    const nodes = [
-      { type: 'storage', name: 'Singapore', coords: [1.3521, 103.8198] },
-      { type: 'server', name: 'China', coords: [35.8617, 104.1954] },
-      { type: 'storage', name: 'Indonesia', coords: [-6.2, 106.8167] },
-      { type: 'server', name: 'Japan', coords: [35.6762, 139.6503] },
-      { type: 'server', name: 'Germany', coords: [51.1657, 10.4515] },
-      { type: 'storage', name: 'UK', coords: [55.3781, -3.436] },
-      { type: 'server', name: 'Poland', coords: [51.9194, 19.1451] },
-      { type: 'server', name: 'USA East', coords: [37.0902, -95.7129] },
-      { type: 'storage', name: 'USA West', coords: [36.7783, -119.4179] },
-      { type: 'server', name: 'Mexico', coords: [23.6345, -102.5528] },
-      { type: 'server', name: 'Brazil', coords: [-14.235, -51.9253] },
-      { type: 'storage', name: 'Chile', coords: [-35.6751, -71.543] },
-      { type: 'server', name: 'Australia', coords: [-25.2744, 133.7751] },
-      { type: 'storage', name: 'New Zealand', coords: [-40.9006, 174.886] }
+    // Just use a dark minimalist map (real tiles below)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      opacity: 0.3
+    }).addTo(map);
+
+    const pins = [
+      { country: "USA", coords: [37.0902, -95.7129], ping: 190 },
+      { country: "Philippines", coords: [12.8797, 121.7740], ping: 35 },
+      { country: "Japan", coords: [36.2048, 138.2529], ping: 50 },
+      { country: "Germany", coords: [51.1657, 10.4515], ping: 250 },
+      { country: "Australia", coords: [-25.2744, 133.7751], ping: 110 },
+      { country: "Chile", coords: [-35.6751, -71.5430], ping: 210 },
+      { country: "Indonesia", coords: [-0.7893, 113.9213], ping: 60 }
     ];
 
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371; // km
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a =
-        Math.sin(dLat / 2) ** 2 +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon / 2) ** 2;
-      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    }
-
-    navigator.geolocation.getCurrentPosition(pos => {
-      const userLat = pos.coords.latitude;
-      const userLon = pos.coords.longitude;
-
-      nodes.forEach(node => {
-        const iconColor = node.type === 'server' ? 'blue' : 'green';
-        const icon = L.divIcon({
-          html: `<div class="pin ${iconColor}"></div>`,
-          className: 'custom-pin',
-          iconSize: [18, 18]
-        });
-        const marker = L.marker(node.coords, { icon }).addTo(map);
-
-        marker.on('click', () => {
-          if (node.type === 'server') {
-            const dist = calculateDistance(userLat, userLon, node.coords[0], node.coords[1]);
-            const ping = Math.round(dist / 0.03); // ~ realistic latency scaling
-            pingCard.innerHTML = `
-              <h3>Server: ${node.name}</h3>
-              <p>Estimated Latency: <span class="ping-val">${ping}</span> ms</p>
-              <div class="latency-ring"></div>
-            `;
-          } else {
-            const status = (node.name === 'Chile' || node.name === 'Indonesia') ? 'In Delivery 🚚' : 'Full ✅';
-            pingCard.innerHTML = `
-              <h3>Storage: ${node.name}</h3>
-              <p>Status: ${status}</p>
-            `;
-          }
-          pingCard.classList.remove('hidden');
-        });
+    pins.forEach(pin => {
+      const icon = L.divIcon({
+        className: "glow-pin",
+        html: `<div class="ping-dot"></div>`,
+        iconSize: [20, 20],
       });
+      const marker = L.marker(pin.coords, { icon }).addTo(map);
+      marker.bindPopup(`
+        <div class="ping-card">
+          <h3>${pin.country}</h3>
+          <p>Ping: <span class="ping">${pin.ping} ms</span></p>
+          <p>Status: <span class="status">Storage Full</span></p>
+        </div>
+      `);
     });
   </script>
 </body>
