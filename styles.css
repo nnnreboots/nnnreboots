@@ -1,107 +1,200 @@
+/* ===== FONT & BASE ===== */
 body {
+  font-family: "Orbitron", sans-serif;
+  background-color: #030a0a;
+  color: #e6ffe6;
   margin: 0;
-  background: radial-gradient(circle at top, #020611 0%, #000000 100%);
-  color: #00ffff;
-  font-family: 'Orbitron', sans-serif;
-  text-align: center;
+  padding: 0;
   overflow-x: hidden;
 }
 
-header {
-  padding: 30px 0;
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.title {
   text-align: center;
-  color: #00ffff;
-  text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-}
-
-h1 {
-  font-size: 2.5em;
-  margin: 0;
+  font-size: 2.5rem;
+  color: #00ffcc;
+  text-shadow: 0 0 15px #00ffaa;
   letter-spacing: 2px;
+  margin-bottom: 40px;
 }
 
-#map-section {
-  width: 100%;
-  height: 400px;
+/* ===== CARD BASE STYLE ===== */
+.card {
+  background: rgba(10, 25, 20, 0.6);
+  border: 1px solid #00ff99;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 180, 0.2);
+  backdrop-filter: blur(6px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(0, 255, 180, 0.35);
+}
+
+.card h2 {
+  color: #00ffcc;
+  text-shadow: 0 0 8px #00ffaa;
+}
+
+.card p {
+  color: #baffd9;
+  line-height: 1.6;
+}
+
+/* ===== CARD LAYOUT ===== */
+.card-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.card-wrapper .card {
+  flex: 1;
+}
+
+.card-row {
+  display: flex;
+  gap: 20px;
+}
+
+.card-row .card {
+  flex: 1;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  background: #00ffcc;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-family: "Orbitron", sans-serif;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background: #00ffaa;
+  box-shadow: 0 0 10px #00ffcc;
+}
+
+/* ===== MAP CARD ===== */
+.map-card {
+  position: relative;
   overflow: hidden;
-  border-bottom: 2px solid #00ffff33;
 }
 
 #map {
+  position: relative;
   width: 100%;
-  height: 400px;
-  filter: brightness(0.6) contrast(1.3);
-  border-top: 2px solid #00ffff33;
+  height: 450px;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/9/9a/BlankMap-World6-Equirectangular.svg') no-repeat center;
+  background-size: contain;
+  filter: brightness(0.7) saturate(1.3);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.card {
-  margin: 50px auto;
-  background: rgba(0, 15, 25, 0.9);
-  border: 1px solid #00ffff33;
-  box-shadow: 0 0 30px #00ffff55, inset 0 0 10px #00ffff22;
-  border-radius: 20px;
-  width: 80%;
-  padding: 30px;
-  max-width: 900px;
+/* ===== PINS ===== */
+.pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  text-align: center;
 }
 
-.large {
-  width: 80%;
+.pin span {
+  display: block;
+  font-size: 20px;
 }
 
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 25px;
+.pin.server .pulse {
+  border: 2px solid #00aaff;
+  box-shadow: 0 0 15px #00ccff;
 }
 
-.stat {
-  background: rgba(0, 20, 30, 0.7);
-  border: 1px solid #00ffff33;
-  padding: 15px 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px #00ffff22;
+.pin.storage .pulse {
+  border: 2px solid #00ff99;
+  box-shadow: 0 0 15px #00ff99;
 }
 
-.highlight {
-  color: #00ffcc;
-  text-shadow: 0 0 10px #00ffff;
-}
-
-/* 🔹 Pins */
-.glow-pin .ping-dot {
+.pulse {
+  position: absolute;
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: radial-gradient(circle, #00ffff 0%, #0055ff 70%);
-  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
-  animation: pulse 2s infinite;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: ping 1.5s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.5); opacity: 0.6; }
+@keyframes ping {
+  0% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(-50%) scale(2.5);
+    opacity: 0;
+  }
 }
 
+/* ===== PING CARD ===== */
 .ping-card {
-  text-align: center;
-  background: rgba(0, 10, 20, 0.95);
-  border: 1px solid #00ffff;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(0, 30, 20, 0.9);
+  border: 1px solid #00ff99;
   border-radius: 10px;
-  box-shadow: 0 0 20px #00ffff;
-  padding: 10px;
-  font-size: 0.9em;
-  color: #00ffff;
+  padding: 20px;
+  box-shadow: 0 0 20px #00ffaa;
+  text-align: center;
+  width: 220px;
+  z-index: 10;
+  transition: opacity 0.3s ease;
 }
 
-.status {
-  color: #ff3cff;
+.ping-card.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
-.leaflet-popup-content-wrapper {
-  background: rgba(0, 0, 20, 0.85);
-  border: 1px solid #00ffff;
-  box-shadow: 0 0 15px #00ffff;
-  color: #00ffff;
+.ping-card h3 {
+  color: #00ffcc;
+  margin: 5px 0;
+}
+
+.ping-card p {
+  color: #baffd9;
+}
+
+#pingFlag {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* ===== LISTS ===== */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  margin: 8px 0;
+  font-size: 1.1rem;
+  color: #baffd9;
+  text-shadow: 0 0 3px #00ffcc;
 }
