@@ -1,156 +1,171 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@400;600&display=swap');
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, #0a0a0a, #000);
-  color: #eaeaea;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
 }
 
-.container {
-  width: 90%;
-  max-width: 1200px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
-  padding: 2rem 3rem;
-  box-shadow: 0 0 40px rgba(0, 200, 255, 0.15);
+body {
+  background-color: #0d1117;
+  color: #e6e6e6;
+  line-height: 1.6;
 }
 
 header {
   text-align: center;
-  margin-bottom: 2rem;
+  padding: 3rem 1rem;
+  background: linear-gradient(135deg, #004d26, #001a0a);
+  color: #b4ffce;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
-h1 {
-  font-family: 'Orbitron', sans-serif;
+header h1 {
   font-size: 2.5rem;
-  color: #00e0ff;
   letter-spacing: 1px;
 }
 
-.tagline {
-  color: #aaa;
+header p {
+  color: #aaffcc;
   margin-top: 0.5rem;
+  font-size: 1.1rem;
 }
 
-.map-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 2rem 0;
+main {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
 }
 
-#map {
-  width: 100%;
-  max-width: 1000px;
-  height: 500px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
-  overflow: hidden;
-}
-
-/* Info and cards */
-.info {
-  text-align: center;
+section {
   margin-bottom: 3rem;
+  background: #161b22;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.info h2 {
-  font-family: 'Orbitron', sans-serif;
-  color: #00e0ff;
+h2 {
+  color: #4cff9e;
   margin-bottom: 1rem;
+  border-bottom: 2px solid #1b6b3a;
+  display: inline-block;
+  padding-bottom: 5px;
 }
 
-.info p {
-  max-width: 700px;
-  margin: 0 auto 2rem;
+ul {
+  list-style-type: none;
+  margin-top: 1rem;
+}
+
+li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #2a2f36;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+li:hover {
+  background: #1f2630;
+}
+
+.server {
+  color: #4ca6ff;
+  font-weight: bold;
+}
+
+.storage {
+  color: #4cff9e;
+  font-weight: bold;
+}
+
+.status {
+  font-size: 0.9rem;
   color: #ccc;
-  line-height: 1.6;
+  margin-left: 1rem;
+}
+
+.info-card {
+  background: #1c2128;
+  border-left: 4px solid #28d47d;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-top: 2rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .stats {
   display: flex;
   justify-content: center;
-  gap: 2rem;
   flex-wrap: wrap;
+  margin-top: 1.5rem;
+  gap: 1rem;
 }
 
-.card {
-  background: rgba(0, 255, 255, 0.05);
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  border-radius: 12px;
-  padding: 1.5rem 2rem;
-  min-width: 150px;
-  transition: transform 0.3s ease, background 0.3s ease;
+.stats .card {
+  background: #11161d;
+  border: 1px solid #1f6b3a;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 180px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  background: rgba(0, 255, 255, 0.15);
-}
-
-.card h3 {
-  color: #00ffff;
-  font-size: 1rem;
+.stats .card h3 {
+  color: #4cff9e;
   margin-bottom: 0.5rem;
 }
 
-.card p {
-  font-size: 1.4rem;
+.stats .card p {
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
-/* Registration sections */
-.register {
-  text-align: center;
-  margin-top: 3rem;
-  padding: 2rem;
-  background: rgba(0, 255, 255, 0.03);
-  border: 1px solid rgba(0, 255, 255, 0.15);
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+.register-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1.5rem;
 }
 
-.register h2 {
-  font-family: 'Orbitron', sans-serif;
-  color: #00e0ff;
-  margin-bottom: 1rem;
+.register-card {
+  background: #1a2028;
+  border-left: 4px solid #00c56b;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 360px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
-.register a {
-  color: #00ffff;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.register a:hover {
-  text-decoration: underline;
-}
-
-.register.reseller {
-  border-color: rgba(0, 255, 100, 0.25);
-  box-shadow: 0 0 25px rgba(0, 255, 100, 0.08);
-}
-
-.register.reseller h2 {
-  color: #00ff9d;
+.register-card h3 {
+  color: #4cff9e;
+  margin-bottom: 0.5rem;
 }
 
 footer {
   text-align: center;
-  color: #555;
-  margin-top: 3rem;
+  padding: 1.5rem;
+  background: #0b0f14;
+  color: #77ffb4;
   font-size: 0.9rem;
 }
 
-/* Leaflet map dark theme */
-.leaflet-container {
-  background: #0b0b0b;
+/* Responsive */
+@media (max-width: 700px) {
+  main {
+    padding: 1rem;
+  }
+
+  .register-card {
+    width: 100%;
+  }
+
+  li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
