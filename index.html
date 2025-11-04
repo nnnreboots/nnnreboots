@@ -4,50 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NNN Reboot Card Database</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <h1>NNN Reboot Card Database</h1>
-    <p>Globally distributed servers and storages for ultra-low latency</p>
+    <h1>NNN REBOOT CARD DATABASE</h1>
+    <p>Global Storage & Server Network Visualization</p>
   </header>
 
   <main>
     <div id="map"></div>
 
-    <section class="info">
-      <div class="info-card">
-        <p>
-          The NNN Reboot Card Database is globally distributed for optimized
-          performance and minimal latency. Each storage and server node ensures
-          reliability and redundancy across continents.
-        </p>
-      </div>
-
+    <section class="about">
+      <h2>About the Database</h2>
+      <p>
+        The NNN Reboot Card Database is globally distributed for optimized performance
+        and minimal latency. Each storage and server node ensures reliability and redundancy across continents.
+      </p>
       <div class="stats">
-        <div class="card"><h3>Global Nodes</h3><p>14</p></div>
-        <div class="card"><h3>Continents Covered</h3><p>6</p></div>
-        <div class="card"><h3>Average Latency</h3><p>38 ms</p></div>
+        <div class="stat-card"><h3>Global Nodes</h3><p>14</p></div>
+        <div class="stat-card"><h3>Continents Covered</h3><p>6</p></div>
+        <div class="stat-card"><h3>Average Latency</h3><p>38 ms</p></div>
+      </div>
+    </section>
+
+    <section class="register">
+      <div class="reg-card manager">
+        <h3>Register as a Database Manager</h3>
+        <p>Want to join our global data network?<br>
+        Contact us at <a href="mailto:nnnreboots@gmail.com">nnnreboots@gmail.com</a>.</p>
       </div>
 
-      <div class="bottom-cards">
-        <div class="reg-card">
-          <h3>Database Manager Registration</h3>
-          <p>
-            Interested in managing NNN databases? Contact us at
-            <a href="mailto:nnnreboots@gmail.com">nnnreboots@gmail.com</a>.
-          </p>
-        </div>
-
-        <div class="reg-card">
-          <h3>Authorized Reseller Registration</h3>
-          <p>
-            Become an official NNN Reboot Card reseller.
-            <a href="mailto:nnnreboots@gmail.com">Apply Now</a>
-          </p>
-        </div>
+      <div class="reg-card reseller">
+        <h3>Register as an Authorized Reseller</h3>
+        <p>Become an official NNN Reboot Card reseller.<br>
+        <a href="mailto:nnnreboots@gmail.com">Apply Now</a></p>
       </div>
     </section>
   </main>
@@ -58,12 +52,10 @@
   </div>
 
   <script>
-    const map = L.map("map", { zoomControl: false }).setView([10, 20], 2);
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "",
+    const map = L.map("map").setView([15, 20], 2);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
       maxZoom: 6,
-      minZoom: 2
+      attribution: ""
     }).addTo(map);
 
     const nodes = [
@@ -87,11 +79,11 @@
     const pingText = document.getElementById("ping-text");
 
     function simulatePing() {
-      return Math.floor(Math.random() * 30) + 20; // realistic ms
+      return Math.floor(Math.random() * 30) + 25;
     }
 
-    function showPingCard(latlng, content) {
-      pingText.textContent = content;
+    function showPingCard(latlng, text) {
+      pingText.textContent = text;
       pingCard.style.left = `${latlng.x}px`;
       pingCard.style.top = `${latlng.y}px`;
       pingCard.classList.remove("hidden");
@@ -99,7 +91,7 @@
       setTimeout(() => {
         pingCard.classList.remove("show");
         pingCard.classList.add("hidden");
-      }, 2500);
+      }, 3000);
     }
 
     nodes.forEach(node => {
@@ -111,11 +103,9 @@
       });
 
       const marker = L.marker(node.coords, { icon }).addTo(map);
-
       marker.on("click", e => {
         if (node.type === "server") {
-          const latency = simulatePing();
-          showPingCard(e.containerPoint, `Ping to ${node.name}: ${latency} ms`);
+          showPingCard(e.containerPoint, `Ping to ${node.name}: ${simulatePing()} ms`);
         } else {
           showPingCard(e.containerPoint, `${node.name} Storage: FULL`);
         }
