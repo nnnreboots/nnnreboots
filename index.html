@@ -3,92 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NNN Reboot Card Database</title>
+  <title>NNN Reboot Cards Database</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>NNN REBOOT CARD DATABASE</h1>
-    <p>Global Storage & Server Network Visualization</p>
-  </header>
+  <div class="container">
+    <h1 class="title">NNN Reboot Cards Database</h1>
 
-  <section id="map-section">
-    <div id="map"></div>
-  </section>
-
-  <section class="card large">
-    <h2>About the Database</h2>
-    <p>
-      The NNN Reboot Card Database is globally distributed for optimized performance and minimal latency. 
-      Each storage and server node ensures reliability and redundancy across continents.
-    </p>
-
-    <div class="stats">
-      <div class="stat"><h3>Global Nodes</h3><p>14</p></div>
-      <div class="stat"><h3>Continents Covered</h3><p>6</p></div>
-      <div class="stat"><h3>Average Latency</h3><p>38 ms</p></div>
+    <div class="card about">
+      <h2>About the Database</h2>
+      <p>
+        The NNN Reboot Cards Database maintains a worldwide node infrastructure to ensure stability, efficiency, and low latency. 
+        Our systems dynamically route data between global nodes for optimal delivery performance.
+      </p>
     </div>
-  </section>
 
-  <section class="card large">
-    <h2>Register as a Database Manager</h2>
-    <p>Want to join our global data network?<br>Contact us at <span class="highlight">nnnreboots@gmail.com</span>.</p>
-  </section>
+    <div class="card-wrapper">
+      <div class="card">
+        <h2>Database Registration</h2>
+        <p>Register your data center to join the global NNN node network.</p>
+        <button class="btn">Register Database</button>
+      </div>
 
-  <section class="card large">
-    <h2>Register as an Authorized Reseller</h2>
-    <p>Become an official NNN Reboot Card reseller.<br><a href="#" class="highlight">Apply Now</a></p>
-  </section>
+      <div class="card">
+        <h2>Reseller Registration</h2>
+        <p>Partner with NNN to resell or manage verified node capacities worldwide.</p>
+        <button class="btn">Register Reseller</button>
+      </div>
+    </div>
+
+    <div class="card map-card">
+      <h2>Global Node Map</h2>
+      <div id="map"></div>
+    </div>
+
+    <div class="card-row">
+      <div class="card server-card">
+        <h2>Server Nodes</h2>
+        <ul id="serverList"></ul>
+      </div>
+
+      <div class="card storage-card">
+        <h2>Storage Nodes</h2>
+        <ul id="storageList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="pingCard" class="ping-card hidden">
+    <span id="pingFlag"></span>
+    <h3 id="pingCountry"></h3>
+    <p>Ping: <span id="pingValue"></span> ms</p>
+  </div>
 
   <script>
-    const map = L.map("map", {
-      zoomControl: false,
-      attributionControl: false,
-      minZoom: 1.5,
-      maxZoom: 1.5,
-      dragging: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      boxZoom: false,
-      keyboard: false
-    }).setView([20, 0], 1.5);
+    const map = document.getElementById("map");
+    const pingCard = document.getElementById("pingCard");
+    const pingCountry = document.getElementById("pingCountry");
+    const pingValue = document.getElementById("pingValue");
+    const pingFlag = document.getElementById("pingFlag");
 
-    L.tileLayer('https://{s}.tile-cyberpunk-style.com/{z}/{x}/{y}.png', {
-      attribution: '',
-    }).addTo(map);
+    const userLat = 12.8797; // Philippines latitude
+    const userLng = 121.7740;
 
-    // Just use a dark minimalist map (real tiles below)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      opacity: 0.3
-    }).addTo(map);
-
-    const pins = [
-      { country: "USA", coords: [37.0902, -95.7129], ping: 190 },
-      { country: "Philippines", coords: [12.8797, 121.7740], ping: 35 },
-      { country: "Japan", coords: [36.2048, 138.2529], ping: 50 },
-      { country: "Germany", coords: [51.1657, 10.4515], ping: 250 },
-      { country: "Australia", coords: [-25.2744, 133.7751], ping: 110 },
-      { country: "Chile", coords: [-35.6751, -71.5430], ping: 210 },
-      { country: "Indonesia", coords: [-0.7893, 113.9213], ping: 60 }
+    const nodes = [
+      { type: 'storage', name: 'Singapore', flag: '🇸🇬', coords: [1.3521, 103.8198] },
+      { type: 'server', name: 'China', flag: '🇨🇳', coords: [35.8617, 104.1954] },
+      { type: 'storage', name: 'Indonesia', flag: '🇮🇩', coords: [-6.2, 106.8167] },
+      { type: 'server', name: 'Japan', flag: '🇯🇵', coords: [35.6762, 139.6503] },
+      { type: 'server', name: 'Germany', flag: '🇩🇪', coords: [51.1657, 10.4515] },
+      { type: 'storage', name: 'UK', flag: '🇬🇧', coords: [55.3781, -3.436] },
+      { type: 'server', name: 'Poland', flag: '🇵🇱', coords: [51.9194, 19.1451] },
+      { type: 'server', name: 'USA East', flag: '🇺🇸', coords: [37.0902, -95.7129] },
+      { type: 'storage', name: 'USA West', flag: '🇺🇸', coords: [36.7783, -119.4179] },
+      { type: 'server', name: 'Mexico', flag: '🇲🇽', coords: [23.6345, -102.5528] },
+      { type: 'server', name: 'Brazil', flag: '🇧🇷', coords: [-14.235, -51.9253] },
+      { type: 'storage', name: 'Chile', flag: '🇨🇱', coords: [-35.6751, -71.543] },
+      { type: 'server', name: 'Australia', flag: '🇦🇺', coords: [-25.2744, 133.7751] },
+      { type: 'storage', name: 'New Zealand', flag: '🇳🇿', coords: [-40.9006, 174.886] }
     ];
 
-    pins.forEach(pin => {
-      const icon = L.divIcon({
-        className: "glow-pin",
-        html: `<div class="ping-dot"></div>`,
-        iconSize: [20, 20],
+    function calcPing(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c;
+      return Math.round(distance / 0.1); // pseudo realistic ping
+    }
+
+    const serverList = document.getElementById("serverList");
+    const storageList = document.getElementById("storageList");
+
+    const mapWidth = 900;
+    const mapHeight = 400;
+
+    nodes.forEach(node => {
+      const pin = document.createElement("div");
+      pin.classList.add("pin", node.type);
+      pin.innerHTML = `<span>${node.flag}</span><div class="pulse"></div>`;
+
+      const x = ((node.coords[1] + 180) / 360) * mapWidth;
+      const y = ((90 - node.coords[0]) / 180) * mapHeight;
+      pin.style.left = `${x}px`;
+      pin.style.top = `${y}px`;
+
+      pin.addEventListener("click", () => {
+        const ping = calcPing(userLat, userLng, node.coords[0], node.coords[1]);
+        pingCountry.textContent = node.name;
+        pingFlag.textContent = node.flag;
+        pingValue.textContent = ping;
+        pingCard.classList.remove("hidden");
       });
-      const marker = L.marker(pin.coords, { icon }).addTo(map);
-      marker.bindPopup(`
-        <div class="ping-card">
-          <h3>${pin.country}</h3>
-          <p>Ping: <span class="ping">${pin.ping} ms</span></p>
-          <p>Status: <span class="status">Storage Full</span></p>
-        </div>
-      `);
+
+      map.appendChild(pin);
+
+      const listItem = document.createElement("li");
+      listItem.textContent = `${node.flag} ${node.name}`;
+      if (node.type === "server") serverList.appendChild(listItem);
+      else storageList.appendChild(listItem);
     });
   </script>
 </body>
