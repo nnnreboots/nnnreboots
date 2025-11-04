@@ -4,54 +4,123 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NNN Reboot Card Database</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
   <header>
     <h1>NNN Reboot Card Database</h1>
-    <p>Globally distributed server & storage network for low-latency performance</p>
+    <p>Globally distributed servers and storages for ultra-low latency</p>
   </header>
 
   <main>
-    <section>
-      <h2>Global Nodes</h2>
-      <ul id="nodeList"></ul>
+    <div id="map"></div>
 
+    <section class="info">
       <div class="info-card">
         <p>
-          The NNN Reboot Card Database is globally distributed for optimized performance and minimal latency.  
-          Each storage and server node ensures reliability and redundancy across continents.
+          The NNN Reboot Card Database is globally distributed for optimized
+          performance and minimal latency. Each storage and server node ensures
+          reliability and redundancy across continents.
         </p>
       </div>
 
       <div class="stats">
-        <div class="card"><h3>Global Nodes</h3><p>24</p></div>
+        <div class="card"><h3>Global Nodes</h3><p>14</p></div>
         <div class="card"><h3>Continents Covered</h3><p>6</p></div>
         <div class="card"><h3>Average Latency</h3><p>38 ms</p></div>
       </div>
-    </section>
 
-    <section>
-      <div class="register-cards">
-        <div class="register-card">
+      <div class="bottom-cards">
+        <div class="reg-card">
           <h3>Database Manager Registration</h3>
-          <p>Interested in managing database nodes? Contact us at:</p>
-          <p><strong>nnnreboots@gmail.com</strong></p>
+          <p>
+            Interested in managing NNN databases? Contact us at
+            <a href="mailto:nnnreboots@gmail.com">nnnreboots@gmail.com</a>.
+          </p>
         </div>
 
-        <div class="register-card">
+        <div class="reg-card">
           <h3>Authorized Reseller Registration</h3>
-          <p>Become an official reseller of NNN Reboot Cards.</p>
-          <p><strong>nnnreboots@gmail.com</strong></p>
+          <p>
+            Become an official NNN Reboot Card reseller.
+            <a href="mailto:nnnreboots@gmail.com">Apply Now</a>
+          </p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>© 2025 NNN Reboot Systems — All Rights Reserved</p>
-  </footer>
+  <div id="ping-card" class="hidden">
+    <div class="latency-ring"></div>
+    <p id="ping-text"></p>
+  </div>
 
-  <script src="script.js"></script>
+  <script>
+    const map = L.map("map", { zoomControl: false }).setView([10, 20], 2);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "",
+      maxZoom: 6,
+      minZoom: 2
+    }).addTo(map);
+
+    const nodes = [
+      { type: "storage", name: "Singapore", coords: [1.3521, 103.8198] },
+      { type: "server", name: "China", coords: [35.8617, 104.1954] },
+      { type: "storage", name: "Indonesia", coords: [-6.2, 106.8167] },
+      { type: "server", name: "Japan", coords: [35.6762, 139.6503] },
+      { type: "server", name: "Germany", coords: [51.1657, 10.4515] },
+      { type: "storage", name: "UK", coords: [55.3781, -3.436] },
+      { type: "server", name: "Poland", coords: [51.9194, 19.1451] },
+      { type: "server", name: "USA East", coords: [37.0902, -95.7129] },
+      { type: "storage", name: "USA West", coords: [36.7783, -119.4179] },
+      { type: "server", name: "Mexico", coords: [23.6345, -102.5528] },
+      { type: "server", name: "Brazil", coords: [-14.235, -51.9253] },
+      { type: "storage", name: "Chile", coords: [-35.6751, -71.543] },
+      { type: "server", name: "Australia", coords: [-25.2744, 133.7751] },
+      { type: "storage", name: "New Zealand", coords: [-40.9006, 174.886] }
+    ];
+
+    const pingCard = document.getElementById("ping-card");
+    const pingText = document.getElementById("ping-text");
+
+    function simulatePing() {
+      return Math.floor(Math.random() * 30) + 20; // realistic ms
+    }
+
+    function showPingCard(latlng, content) {
+      pingText.textContent = content;
+      pingCard.style.left = `${latlng.x}px`;
+      pingCard.style.top = `${latlng.y}px`;
+      pingCard.classList.remove("hidden");
+      pingCard.classList.add("show");
+      setTimeout(() => {
+        pingCard.classList.remove("show");
+        pingCard.classList.add("hidden");
+      }, 2500);
+    }
+
+    nodes.forEach(node => {
+      const icon = L.divIcon({
+        className: `node-icon ${node.type}`,
+        html: `<div class="pin"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+      });
+
+      const marker = L.marker(node.coords, { icon }).addTo(map);
+
+      marker.on("click", e => {
+        if (node.type === "server") {
+          const latency = simulatePing();
+          showPingCard(e.containerPoint, `Ping to ${node.name}: ${latency} ms`);
+        } else {
+          showPingCard(e.containerPoint, `${node.name} Storage: FULL`);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
