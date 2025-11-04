@@ -1,6 +1,6 @@
 body {
   font-family: 'Orbitron', sans-serif;
-  background: radial-gradient(circle at center, #020202, #050505);
+  background: radial-gradient(circle at center, #030303, #05080d);
   color: #0ff;
   text-align: center;
   margin: 0;
@@ -10,15 +10,11 @@ body {
 header {
   margin-top: 40px;
 }
-
 h1 {
-  font-size: 2.8em;
-  text-shadow: 0 0 20px #00f0ff;
+  font-size: 3em;
+  text-shadow: 0 0 25px #00eaff;
 }
-
-p {
-  color: #aaa;
-}
+p { color: #9cd; }
 
 .map-section {
   margin: 40px auto;
@@ -28,95 +24,100 @@ p {
   border: 2px solid #00f0ff33;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 0 30px #00ffff33;
+  box-shadow: 0 0 35px #00ffff33;
 }
 
 #map {
-  height: 400px;
+  height: 420px;
   width: 100%;
-  border-radius: 15px;
 }
 
 .custom-pin {
-  animation: glow 2s infinite alternate;
+  animation: pulse 2s infinite alternate;
 }
 .pin.blue {
   background: #00bfff;
   border-radius: 50%;
-  width: 16px;
-  height: 16px;
-  box-shadow: 0 0 10px #00bfff;
+  width: 18px;
+  height: 18px;
+  box-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff66;
 }
 .pin.green {
   background: #00ff99;
   border-radius: 50%;
-  width: 16px;
-  height: 16px;
-  box-shadow: 0 0 10px #00ff99;
+  width: 18px;
+  height: 18px;
+  box-shadow: 0 0 10px #00ff99, 0 0 20px #00ff9966;
 }
-@keyframes glow {
+@keyframes pulse {
   from { transform: scale(1); opacity: 1; }
-  to { transform: scale(1.2); opacity: 0.7; }
+  to { transform: scale(1.2); opacity: 0.6; }
 }
 
 .ping-card {
   background: rgba(0, 20, 40, 0.9);
   border: 1px solid #0ff;
   border-radius: 15px;
-  width: 280px;
+  width: 300px;
   padding: 15px;
   color: #fff;
-  box-shadow: 0 0 20px #00ffff88;
+  box-shadow: 0 0 25px #00ffff66;
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
+  text-align: left;
   transition: all 0.3s ease;
 }
 .hidden { display: none; }
 
-.latency-ring {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin: 10px auto;
-  border: 4px solid #00ffff55;
-  border-top: 4px solid #00ffff;
-  animation: spin 2s linear infinite;
-}
-@keyframes spin { 100% { transform: rotate(360deg); } }
-
 .about, .register {
-  background: rgba(0, 30, 40, 0.9);
-  border: 1px solid #00f0ff33;
+  background: rgba(0, 30, 50, 0.85);
+  border: 1px solid #00f0ff44;
   border-radius: 20px;
-  box-shadow: 0 0 25px #00ffff33;
-  padding: 20px;
+  box-shadow: 0 0 35px #00ffff33;
+  padding: 25px;
   width: 90%;
   max-width: 1000px;
   margin: 30px auto;
 }
-.full-card {
+.register.full-card {
   width: 90%;
   max-width: 1000px;
 }
 .register.green {
   border-color: #00ff99;
-  box-shadow: 0 0 25px #00ff9933;
-}
-a {
-  color: #0ff;
-  text-decoration: none;
+  box-shadow: 0 0 35px #00ff9933;
 }
 
 .stats {
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 .card {
   background: rgba(0, 40, 50, 0.8);
-  border: 1px solid #00ffff33;
+  border: 1px solid #00ffff55;
   border-radius: 10px;
   width: 200px;
   padding: 10px;
+  transition: transform 0.3s;
 }
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ffff66;
+}
+
+a { color: #00eaff; text-decoration: none; }
+a:hover { color: #00ffaa; }
+
+.latency-ring {
+  width: 80px;
+  height: 80px;
+  border: 4px solid #00ffff55;
+  border-top: 4px solid #00ffff;
+  border-radius: 50%;
+  margin: 10px auto;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
