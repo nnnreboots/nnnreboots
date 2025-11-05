@@ -8,15 +8,15 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="navbar">
-    <h1>NNN Reboot Cards</h1>
-    <nav>
-      <select id="pageSelector" onchange="navigatePage()">
-        <option value="index.html" selected>Database</option>
-        <option value="authorized-sellers.html">Authorized Sellers</option>
-      </select>
-    </nav>
-  </header>
+  <nav class="navbar">
+    <div class="nav-container">
+      <span class="logo">NNN Systems</span>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="sellers.html">Authorized Sellers</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <div class="container">
     <header class="header">
@@ -50,36 +50,36 @@
       <section class="card-row">
         <article class="card nodes-card">
           <h2>Server Nodes</h2>
-          <ul class="node-list">
-            <li>China — <span class="status up">Operational</span></li>
-            <li>Japan — <span class="status up">Operational</span></li>
-            <li>Germany — <span class="status up">Operational</span></li>
-            <li>Poland — <span class="status up">Operational</span></li>
-            <li>USA East — <span class="status up">Operational</span></li>
-            <li>Mexico — <span class="status up">Operational</span></li>
-            <li>Brazil — <span class="status up">Operational</span></li>
-            <li>Australia — <span class="status up">Operational</span></li>
+          <ul class="node-list" id="serverList">
+            <li><span class="node-name">China</span> <span class="status up">Operational</span></li>
+            <li><span class="node-name">Japan</span> <span class="status up">Operational</span></li>
+            <li><span class="node-name">Germany</span> <span class="status up">Operational</span></li>
+            <li><span class="node-name">Poland</span> <span class="status up">Operational</span></li>
+            <li><span class="node-name">USA East</span> <span class="status up">Operational</span></li>
+            <li><span class="node-name">Mexico</span> <span class="status up">Operational</span></li>
+            <li><span class="node-name">Brazil</span> <span class="status up">Operational</span></li>
+            <li><span class="node-name">Australia</span> <span class="status up">Operational</span></li>
           </ul>
         </article>
 
         <aside class="card nodes-card">
           <h2>Storage Nodes</h2>
-          <ul class="node-list">
-            <li>Singapore — <span class="status full">Full</span></li>
-            <li>Indonesia — <span class="status building">Delivering</span></li>
-            <li>UK — <span class="status full">Full</span></li>
-            <li>USA West — <span class="status full">Full</span></li>
-            <li>Chile — <span class="status building">Delivering</span></li>
-            <li>New Zealand — <span class="status full">Full</span></li>
+          <ul class="node-list" id="storageList">
+            <li><span class="node-name">Singapore</span> <span class="status up">Full</span></li>
+            <li><span class="node-name">Indonesia</span> <span class="status building">Delivering</span></li>
+            <li><span class="node-name">UK</span> <span class="status up">Full</span></li>
+            <li><span class="node-name">USA West</span> <span class="status up">Full</span></li>
+            <li><span class="node-name">Chile</span> <span class="status building">Delivering</span></li>
+            <li><span class="node-name">New Zealand</span> <span class="status up">Full</span></li>
           </ul>
         </aside>
       </section>
 
-      <!-- Registration cards -->
+      <!-- Registration cards: Database Manager & Reseller -->
       <section class="card registration-row">
         <div class="card reg-card">
           <h2>Database Manager Registration</h2>
-          <p>To register as a Database Manager, contact <strong>nnnreboots@gmail.com</strong></p>
+          <p>Want to join our global database? Contact <strong>nnnreboots@gmail.com</strong></p>
         </div>
 
         <div class="card reg-card">
@@ -96,10 +96,6 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    function navigatePage() {
-      const select = document.getElementById('pageSelector');
-      window.location.href = select.value;
-    }
   </script>
 </body>
 </html>
