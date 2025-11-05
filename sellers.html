@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Authorized Sellers - NNN Reboot Cards Database</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <span class="logo">NNN Systems</span>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="sellers.html" class="active">Authorized Sellers</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header class="header">
+      <h1>Authorized Sellers</h1>
+      <p class="sub">Official, verified NNN Reboot Card resellers.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Current Sellers</h2>
+        <ul class="node-list">
+          <li>
+            <div>
+              <span class="node-name">NNNReboots</span>
+              <p class="seller-desc">Main authorized seller for all NNN Reboot Cards.</p>
+              <a href="https://nnnreboots.github.io/nnnreboots" target="_blank" class="seller-link">nnnreboots.github.io/nnnreboots</a>
+            </div>
+            <span class="status up">Main Seller</span>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> NNN Reboot Systems — All Rights Reserved</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
